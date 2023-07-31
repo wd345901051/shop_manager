@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.csmall.product.mapper.CategoryAttributeTemplateMapper">
+
+    <!-- int insert(CategoryAttributeTemplate categoryAttributeTemplate); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_category_attribute_template (
+            category_id, attribute_template_id
+        ) VALUES (
+            #{categoryId}, #{attributeTemplateId}
+        )
+    </insert>
+
+    <!-- int deleteById(Long id); -->
+    <delete id="deleteById">
+        DELETE
+        FROM
+            pms_category_attribute_template
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!-- int deleteByIds(Long... ids); -->
+    <delete id="deleteByIds">
+        DELETE
+        FROM
+            pms_category_attribute_template
+        WHERE
+            id IN (
+                <foreach collection="array" item="id" separator=",">
+                    #{id}
+                </foreach>
+            )
+    </delete>
+
+    <!-- int countByCategory(Long categoryId); -->
+    <select id="countByCategory" resultType="int">
+        SELECT count(*) FROM pms_category_attribute_template WHERE category_id=#{categoryId}
+    </select>
+
+    <!-- int countByAttributeTemplate(Long attributeTemplateId); -->
+    <select id="countByAttributeTemplate" resultType="int">
+        SELECT count(*) FROM pms_category_attribute_template WHERE attribute_template_id=#{attributeTemplateId}
+    </select>
+
+    <!-- int countByCategoryAndAttributeTemplate(@Param("categoryId") Long categoryId, @Param("attributeTemplateId") Long attributeTemplateId); -->
+    <select id="countByCategoryAndAttributeTemplate" resultType="int">
+        SELECT count(*) FROM pms_category_attribute_template
+        WHERE category_id=#{categoryId} AND attribute_template_id=#{attributeTemplateId}
+    </select>
+
+    <!-- 提示：此查询除了检查数据是否存在以外，暂无其它意义，则暂时没有配置resultMap -->
+    <!-- CategoryAttributeTemplateStandardVO getStandardById(Long id); -->
+    <select id="getStandardById" resultType="cn.tedu.csmall.product.pojo.vo.CategoryAttributeTemplateStandardVO">
+        SELECT
+            id,
+            category_id AS categoryId,
+            attribute_template_id AS attributeTemplateId
+        FROM
+            pms_category_attribute_template
+        WHERE
+            id=#{id}
+    </select>
+
+</mapper>

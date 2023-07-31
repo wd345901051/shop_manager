@@ -1,0 +1,31 @@
+# Spring配置
+spring:
+  # Profile相关配置
+  profiles:
+    # 激活Profile配置
+    active: dev
+  # Jackson相关配置
+  jackson:
+    # 响应的JSON结果中，将不包含为null的属性
+    default-property-inclusion: non_null
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+
+# Mybatis配置
+mybatis:
+  # 配置SQL的XML文件的位置
+  mapper-locations: classpath:mapper/*.xml
+
+# Knife4j配置
+knife4j:
+  # 开启增强模式
+  enable: true
+
+# 自定义配置
+csmall:
+  # JWT相关配置
+  jwt:
+    # 密钥
+    secret-key: xnGFDfdklafLJKuj5EGr72jkhFDxcuXFDiyGdfnGTli45ed
+    # 有效时长，以分钟为单位
+    duration-in-minute: 10000

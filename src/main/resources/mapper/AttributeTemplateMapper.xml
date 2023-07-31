@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="cn.tedu.csmall.product.mapper.AttributeTemplateMapper">
+
+    <!-- int insert(AttributeTemplate attributeTemplate); -->
+    <insert id="insert" useGeneratedKeys="true" keyProperty="id">
+        INSERT INTO pms_attribute_template (
+            name, pinyin, keywords, sort
+        ) VALUES (
+            #{name}, #{pinyin}, #{keywords}, #{sort}
+        )
+    </insert>
+
+    <!-- int deleteById(Long id); -->
+    <delete id="deleteById">
+        DELETE
+        FROM
+            pms_attribute_template
+        WHERE
+            id = #{id}
+    </delete>
+
+    <!-- int deleteByIds(Long... ids); -->
+    <delete id="deleteByIds">
+        DELETE
+        FROM
+            pms_attribute_template
+        WHERE
+            id IN (
+                <foreach collection="array" item="id" separator=",">
+                    #{id}
+                </foreach>
+            )
+    </delete>
+
+    <!-- int countByName(String name); -->
+    <select id="countByName" resultType="int">
+        SELECT count(*) FROM pms_attribute_template WHERE name=#{name}
+    </select>
+
+    <!-- AttributeTemplateStandardVO getStandardById(Long id); -->
+    <select id="getStandardById" resultMap="StandardResultMap">
+        SELECT
+            <include refid="StandardQueryFields"/>
+        FROM
+            pms_attribute_template
+        WHERE
+            id=#{id}
+    </select>
+
+    <!-- List<AttributeTemplateListItemVO> list(); -->
+    <select id="list" resultMap="ListItemResultMap">
+        SELECT
+            <include refid="ListItemQueryFields" />
+        FROM
+            pms_attribute_template
+        ORDER BY
+            sort DESC, id
+    </select>
+
+    <sql id="StandardQueryFields">
+        <if test="true">
+            id,
+            name,
+            pinyin,
+            keywords,
+            sort
+        </if>
+    </sql>
+
+    <resultMap id="StandardResultMap" type="cn.tedu.csmall.product.pojo.vo.AttributeTemplateStandardVO">
+        <id column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="pinyin" property="pinyin"/>
+        <result column="keywords" property="keywords"/>
+        <result column="sort" property="sort"/>
+    </resultMap>
+
+    <sql id="ListItemQueryFields">
+        <if test="true">
+            id, name, pinyin, keywords, sort
+        </if>
+    </sql>
+
+    <resultMap id="ListItemResultMap" type="cn.tedu.csmall.product.pojo.vo.AttributeTemplateListItemVO">
+        <id column="id" property="id" />
+        <result column="name" property="name" />
+        <result column="pinyin" property="pinyin" />
+        <result column="keywords" property="keywords" />
+        <result column="sort" property="sort" />
+    </resultMap>
+
+</mapper>
